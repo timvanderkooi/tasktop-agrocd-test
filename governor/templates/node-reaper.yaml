@@ -1,0 +1,170 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: {{ .Release.Name }}-system
+  annotations:
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'docker/default'
+    apparmor.security.beta.kubernetes.io/allowedProfileNames: 'runtime/default'
+    seccomp.security.alpha.kubernetes.io/defaultProfileName:  'docker/default'
+    apparmor.security.beta.kubernetes.io/defaultProfileName:  'runtime/default'
+spec:
+  privileged: false
+  # Required to prevent escalations to root.
+  allowPrivilegeEscalation: false
+  # This is redundant with non-root + disallow privilege escalation,
+  # but we can provide it for defense in depth.
+  requiredDropCapabilities:
+    - ALL
+  # Allow core volume types.
+  volumes:
+    - 'configMap'
+    - 'emptyDir'
+    - 'projected'
+    - 'secret'
+    - 'downwardAPI'
+    - 'persistentVolumeClaim'
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+  seLinux:
+    # This policy assumes the nodes are using AppArmor rather than SELinux.
+    rule: 'RunAsAny'
+  # Governor container runs as root.
+  runAsUser:
+    rule: 'RunAsAny'
+  supplementalGroups:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 0
+        max: 65535
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 0
+        max: 65535
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+rules:
+- apiGroups: [""]
+  resources: ["nodes", "pods"]
+  verbs: ["get", "list", "patch"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["get", "list", "create"]
+- apiGroups: [""]
+  resources: ["pods/eviction"]
+  verbs: ["create"]
+- apiGroups: ["batch"]
+  resources: ["cronjobs"]
+  verbs: ["get", "patch"]
+- apiGroups: ["extensions", "apps"]
+  resources: ["daemonsets"]
+  verbs: ["get"]
+- apiGroups:
+  - extensions
+  resourceNames:
+  - {{ .Release.Name }}-system
+  resources:
+  - podsecuritypolicies
+  verbs:
+  - use
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ .Release.Name }}
+subjects:
+- kind: ServiceAccount
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: {{ .Release.Name }}
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  schedule: "{{ .Values.cronJob }}"
+  failedJobsHistoryLimit: 3
+  successfulJobsHistoryLimit: 3
+  # Disallow concurrent executions
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 900
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      # Terminate long running pods
+      activeDeadlineSeconds: 14400
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: {{ .Values.iamRole }}
+        spec:
+          serviceAccountName: {{ .Release.Name }}
+          restartPolicy: Never
+          containers:
+          - name: node-reaper
+            env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            # Expose self nodeName as NODE_NAME environment variable - required for reapOld
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            image: keikoproj/governor:{{ .Chart.AppVersion }}
+            args:
+            - governor
+            - reap
+            - node
+
+            # General settings
+            #
+            - --dry-run={{ .Values.dryRun }}
+            # Only operate in region with the k8s cluster
+            - --region={{ .Values.awsregion }}
+            # Wait 180 seconds after each unhealthy node termination
+            - --reap-throttle={{ .Values.reapThrottle }}
+            # Kill a maximum of 1 nodes per run considering throttle wait times
+            - --max-kill-nodes={{ .Values.maxKill }}
+
+            # Reap after X minues in a bad state
+            - --reap-after={{ .Values.reapAfter }}
+            # Reap nodes with active pods
+            - --soft-reap={{ .Values.softReap }}
+            # Unknown nodes are reapable
+            - --reap-unknown={{ .Values.reapUnknown }}
+            # NotReady nodes are reapable
+            - --reap-unready=true
+            # Nodes with an invalid/incorrect instance-id are reapable
+            - --reap-ghost=true
+            # Nodes which fail to join the cluster are reapable
+            - --reap-unjoined=true
+            # Tag key and value used to identify an unjoined node, this is an EC2 tag that should
+            # exist on the instances as they are launched (part of ASG), be careful not to get this
+            # wrong as it can cause termination of other instances if they are not detected as nodes
+            # in the cluster
+            - --reap-unjoined-tag-key=kubernetes.io/cluster/{{ .Values.environment }}
+            - --reap-unjoined-tag-value=owned
+            # Nodes should join the cluster within X mintues
+            - --reap-unjoined-threshold-minutes={{ .Values.reapAfter }}

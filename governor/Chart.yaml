@@ -1,0 +1,5 @@
+apiVersion: v1
+appVersion: "0.2.6"
+description: A Helm chart for Governor (https://github.com/keikoproj/governor)
+name: governor
+version: 1.0.0
