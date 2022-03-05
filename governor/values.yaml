@@ -1,4 +1,4 @@
 awsregion: us-west-2
 iamRole: role
 environment: development
-cronjob: 5 4 * * *
+cronJob: 5 4 * * *
