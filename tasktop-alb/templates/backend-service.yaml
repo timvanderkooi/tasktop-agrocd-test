@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tasktop-alb.fullname" . }}-backend
+  labels:
+    {{- include "tasktop-alb.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- include "tasktop-alb.selectorLabels" . | nindent 4 }}
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: http

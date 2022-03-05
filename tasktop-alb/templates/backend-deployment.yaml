@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "tasktop-alb.fullname" . }}-backend
+  labels:
+    {{- include "tasktop-alb.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      {{- include "tasktop-alb.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: backend
+  template:
+    metadata:
+      labels:
+        {{- include "tasktop-alb.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: backend
+    spec:
+      serviceAccount: {{ .Release.Name }}-ingress-nginx
+      containers:
+      - name: nginx-error-server
+        image: {{ .Values.alb.registry }}.dkr.ecr.us-west-2.amazonaws.com/ops/kubernetes-ingress-controller/custom-error-pages:0.7
+        ports:
+        - containerPort: 8080
+        # Setting the environment variable DEBUG we can see the headers sent
+        # by the ingress controller to the backend in the client response.
+        # env:
+        # - name: DEBUG
+        #   value: "true"
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 65534
+          runAsGroup: 65534
+        volumeMounts:
+        - name: error-pages
+          mountPath: /www
+      volumes:
+      - name: error-pages
+        configMap:
+          name: {{ include "tasktop-alb.fullname" . }}-error-pages

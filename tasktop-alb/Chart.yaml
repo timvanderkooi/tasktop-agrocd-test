@@ -1,0 +1,9 @@
+apiVersion: v2
+appVersion: "1.0"
+description: A Helm chart for deploying an ALB that forwards to NGINX ingress
+name: tasktop-alb
+version: 1.0.1
+dependencies:
+- name: ingress-nginx
+  repository: https://kubernetes.github.io/ingress-nginx
+  version: "3.34.0"

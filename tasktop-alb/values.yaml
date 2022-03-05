@@ -1,0 +1,64 @@
+ingress-nginx:
+  podSecurityPolicy:
+    enabled: true
+  defaultBackend:
+    enabled: false
+  controller:
+    ingressClass: vsm-nginx
+    service:
+      type: NodePort
+    config:
+      use-forwarded-headers: "true"
+      custom-http-errors: "404,501,502,503,504"
+      server-tokens: "false"
+    lifecycle:
+      preStop:
+        exec:
+          command:
+          - /wait-shutdown
+    replicaCount: 3
+    extraArgs:
+      default-backend-service: tasktop-alb/tasktop-alb-backend
+    podAnnotations:
+      ad.datadoghq.com/controller.check_names: '["nginx_ingress_controller", "openmetrics"]'
+      ad.datadoghq.com/controller.init_configs: '[{},{}]'
+      ad.datadoghq.com/controller.instances: |
+        [
+          {
+            "prometheus_url": "http://%%host%%:10254/metrics"
+          },
+          {
+            "prometheus_url": "http://%%host%%:10254/metrics",
+            "namespace": "nginx_ingress",
+            "health_service_check": false,
+            "metrics": [
+              {"nginx_ingress_controller_request_duration_seconds":"controller.request_duration"}
+            ]
+          }
+        ]
+    admissionWebhooks:
+      enabled: false
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - ingress-nginx
+          topologyKey: topology.kubernetes.io/zone
+    updateStrategy:
+      rollingUpdate:
+        maxUnavailable: 1
+      type: RollingUpdate
+
+alb:
+  name:
+  environment:
+  subnets: []
+  wafAclId:
+  logsBucket:
+  sslCertificateArn:
+  domainNames: []
+  registry: "228852391356"

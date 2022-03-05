@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "tasktop-alb.fullname" . }}-backend
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "tasktop-alb.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: backend
+  ingress:
+  # incoming connections from controller
+  - from:
+    - podSelector:
+        matchLabels:
+          {{- include "ingress-nginx.selectorLabels" . | nindent 10 }}
+          app.kubernetes.io/component: controller
+    ports:
+    - protocol: TCP
+      port: 8080

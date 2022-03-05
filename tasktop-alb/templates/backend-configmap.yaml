@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "tasktop-alb.fullname" . }}-error-pages
+  labels:
+    {{- include "tasktop-alb.labels" . | nindent 4 }}
+data:
+  404.html: {{ tpl (.Files.Get "404.html") . | quote }}
+  5xx.html: {{ tpl (.Files.Get "5xx.html") . | quote }}

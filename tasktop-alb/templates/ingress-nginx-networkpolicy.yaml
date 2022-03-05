@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "tasktop-alb.fullname" . }}-controller
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "ingress-nginx.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: controller
+  egress:
+  # allow controller to connect to cluster API and other backends
+  - to:
+    - ipBlock:
+        cidr: 10.0.0.0/8
+  ingress:
+  # incoming connections to http, https
+  - from:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+    ports:
+    - protocol: TCP
+      port: 80
+    - protocol: TCP
+      port: 443
+  # incoming connections to health check
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: datadog
+    ports:
+    - protocol: TCP
+      port: 10254

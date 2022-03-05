@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Tasktop Value Stream Management</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="data:image/png;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvIH/ALyB/wC8gf8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAvrzwwL688MC+vP8AvIH/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwL688AC8gf/AvrzwALyB/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMC+vPAAvIH/wL688AC8gf8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAvrzwALyB/8C+vPAAvIH/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwL688AC8gf/AvrzwALyB/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMC+vPAAvIH/wL688AC8gf8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAvrzwALyB/8C+vPAAvIH/ALyBCgC8gQkAvIEJALyBCQC8gQkAvIEJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwL688wC8gf/AvrzwALyBVAC8gdsAvIH9ALyB/QC8gfIAvIH9ALyB+sC+vP/Avrz/wL68/8C+vP/Avrz/wL68/8C+vMUAvIHikr2rtQC8gQsAvIELALyBCwC8gQsAvIELALyBCwC8gfbAvrz/wL68EMC+vBDAvrwQwL68EMC+vA8AAAAAALyBPCu8jOYAvIH/ALyB/wC8gf8AvIH/ALyB/wC8gf8AvIH/wL68/sC+vP/Avrz/wL68/8C+vP/Avrz/wL68/8C+vOfAvryuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A//8AAP//AAD+PwAA/D8AAPw/AAD8PwAA/D8AAPw/AAD8PwAA/AAAAPwAAAAAAAAAAgAAAAB/AAD//wAA//8AAA==
+">
+</head>
+
+<style>
+  body {
+    color: #363636;
+    background-color: #f5f5f5;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    height: 100vh;
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  .content {
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 2em;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+
+  h2 {
+    font-size: 25px;
+    font-weight: normal;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  a {
+    text-decoration: none !important;
+    color: #069abe;
+  }
+
+  a:link,
+  a:visited {
+    color: #069abe;
+  }
+
+  a:hover,
+  a:active {
+    color: #026f89;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 8px;
+    margin-bottom: 10px;
+    background-color: white;
+    box-shadow: 0 0 10px -10px black;
+  }
+
+  .support-link {
+    text-align: right;
+    flex-grow: 1;
+  }
+
+  .page-footer {
+    height: 30px;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    color: #949494;
+    font-weight: bold;
+  }
+
+  .page-body {
+    padding: 10vh 10vw;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: white;
+  }
+
+  .top-bar {
+    position: fixed;
+    background: #fff;
+    top: 0;
+    height: 64px;
+    width: 100%;
+    -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  }
+
+  .logo {
+    margin-left: 250px;
+    margin-top: 10px;
+    width: 158px;
+    height: 40px;
+  }
+
+  .contact-link-container {
+    position: relative;
+    float: right;
+    margin-right: 315px;
+    margin-top: 21px;
+  }
+
+  .contact-link-container .link {
+    font-size: 15px;
+  }
+
+  .link {
+    text-decoration: none;
+    color: #009abe;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <div class="content">
+      <div class="page-header">
+        <div class="top-bar">
+          <svg class="logo" viewBox="0 0 317 63" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Tasktop-logo-dark</title>
+            <desc>Created with Sketch.</desc>
+            <defs></defs>
+            <g id="Logos" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g transform="translate(-30.000000, -138.000000)" id="Logos/Tasktop-logo-dark">
+                <g transform="translate(30.000000, 138.000000)">
+                  <polyline id="Fill-1" fill="#4D4E4C" points="72.846 57.598 72.846 36.203 60.837 36.203 60.837 32.653 88.996 32.653 88.996 36.203 76.987 36.203 76.987 57.598 72.846 57.598"></polyline>
+                  <path d="M117.639,48.764 L110.476,36.649 L103.313,48.764 L117.639,48.764 Z M122.801,57.569 L119.728,52.314 L101.224,52.314 L98.128,57.569 L93.408,57.569 L108.211,32.652 L112.741,32.652 L127.521,57.569 L122.801,57.569 Z" id="Fill-2"
+                    fill="#4D4E4C"></path>
+                  <path
+                    d="M144.622,57.598 C143.439,57.598 142.298,57.526 141.233,57.383 C140.135,57.236 139.149,56.935 138.304,56.49 C137.433,56.031 136.729,55.369 136.211,54.521 C135.7,53.685 135.429,52.513 135.429,51.133 L135.429,50.675 L139.332,50.675 L139.332,51.133 C139.332,51.654 139.408,52.104 139.558,52.469 C139.698,52.812 139.927,53.091 140.258,53.324 C140.605,53.568 141.084,53.756 141.681,53.884 C142.305,54.017 143.109,54.085 144.07,54.085 L153.942,54.085 C155.058,54.085 155.997,54.016 156.733,53.881 C157.432,53.753 157.987,53.545 158.384,53.261 C158.763,52.99 159.028,52.627 159.192,52.152 C159.369,51.64 159.459,50.98 159.459,50.191 C159.459,49.509 159.385,48.947 159.24,48.52 C159.108,48.133 158.891,47.834 158.577,47.607 C158.248,47.369 157.783,47.2 157.196,47.103 C156.561,46.999 155.75,46.947 154.786,46.947 L148.746,46.947 C146.321,46.947 144.255,46.881 142.605,46.751 C140.915,46.617 139.525,46.309 138.475,45.835 C137.371,45.336 136.569,44.574 136.091,43.569 C135.63,42.601 135.397,41.289 135.397,39.67 C135.397,38.266 135.614,37.097 136.042,36.194 C136.479,35.271 137.151,34.533 138.038,34 C138.897,33.485 139.974,33.127 141.241,32.934 C142.473,32.747 143.938,32.653 145.596,32.653 L152.448,32.653 C154.435,32.653 156.104,32.781 157.406,33.034 C158.742,33.295 159.817,33.709 160.603,34.263 C161.412,34.835 161.986,35.562 162.31,36.424 C162.552,37.07 162.707,37.875 162.759,38.752 L162.788,39.237 L158.84,39.237 L158.795,38.828 C158.76,38.503 158.714,38.213 158.658,37.969 C158.558,37.523 158.284,37.179 157.824,36.918 C157.31,36.628 156.487,36.429 155.377,36.326 C154.213,36.22 152.583,36.166 150.532,36.166 L147.155,36.166 C145.641,36.166 144.34,36.204 143.291,36.278 C142.287,36.351 141.474,36.519 140.875,36.778 C140.318,37.019 139.929,37.361 139.685,37.822 C139.429,38.305 139.299,39.003 139.299,39.897 C139.299,40.542 139.364,41.089 139.492,41.521 C139.603,41.897 139.82,42.194 140.158,42.427 C140.522,42.68 141.061,42.868 141.76,42.985 C142.5,43.111 143.485,43.174 144.687,43.174 L154.104,43.174 C157.322,43.174 159.604,43.656 161.081,44.648 C162.595,45.666 163.362,47.268 163.362,49.412 L163.362,50.938 C163.362,52.472 163.064,53.703 162.475,54.599 C161.888,55.491 161.103,56.168 160.142,56.614 C159.21,57.045 158.138,57.321 156.956,57.433 C155.81,57.543 154.632,57.598 153.455,57.598 L144.622,57.598"
+                    id="Fill-3" fill="#4D4E4C"></path>
+                  <polyline id="Fill-4" fill="#4D4E4C" points="194.295 57.598 178.856 46.696 178.872 57.598 174.73 57.598 174.73 32.653 178.872 32.653 178.856 42.317 193.148 32.653 200.248 32.639 182.412 44.533 201.839 57.598 194.295 57.598">
+                  </polyline>
+                  <polyline id="Fill-5" fill="#4D4E4C" points="221.348 57.598 221.348 36.203 209.338 36.203 209.338 32.653 237.498 32.653 237.498 36.203 225.488 36.203 225.488 57.598 221.348 57.598"></polyline>
+                  <path
+                    d="M255.537,36.166 C254.815,36.166 254.126,36.234 253.487,36.367 C252.884,36.494 252.354,36.724 251.912,37.051 C251.481,37.37 251.131,37.822 250.872,38.397 C250.608,38.983 250.474,39.762 250.474,40.709 L250.474,49.542 C250.474,50.489 250.608,51.267 250.872,51.854 C251.131,52.429 251.481,52.882 251.912,53.2 C252.354,53.527 252.884,53.757 253.487,53.883 C254.123,54.017 254.812,54.085 255.537,54.085 L268.429,54.085 C269.153,54.085 269.842,54.017 270.478,53.883 C271.081,53.757 271.611,53.527 272.053,53.2 C272.485,52.881 272.835,52.428 273.093,51.854 C273.357,51.267 273.492,50.489 273.492,49.542 L273.492,40.709 C273.492,39.762 273.357,38.983 273.093,38.397 C272.835,37.823 272.485,37.37 272.053,37.05 C271.611,36.724 271.081,36.494 270.478,36.367 C269.839,36.234 269.15,36.166 268.429,36.166 L255.537,36.166 Z M255.212,57.598 C253.569,57.598 252.17,57.41 251.057,57.039 C249.913,56.657 248.977,56.061 248.277,55.267 C247.581,54.479 247.083,53.491 246.796,52.331 C246.518,51.21 246.377,49.867 246.377,48.34 L246.377,41.911 C246.377,40.385 246.518,39.042 246.796,37.92 C247.083,36.761 247.581,35.773 248.277,34.983 C248.978,34.189 249.913,33.593 251.057,33.212 C252.17,32.841 253.569,32.653 255.212,32.653 L268.753,32.653 C270.376,32.653 271.763,32.841 272.876,33.212 C274.02,33.593 274.955,34.189 275.656,34.983 C276.35,35.77 276.854,36.757 277.152,37.916 C277.442,39.044 277.589,40.388 277.589,41.911 L277.589,48.34 C277.589,49.863 277.442,51.207 277.152,52.335 C276.854,53.495 276.35,54.481 275.656,55.268 C274.956,56.061 274.02,56.657 272.876,57.039 C271.763,57.41 270.376,57.598 268.753,57.598 L255.212,57.598 Z"
+                    id="Fill-6" fill="#4D4E4C"></path>
+                  <path
+                    d="M308.273,44.433 C309.46,44.433 310.38,44.208 311.008,43.763 C311.594,43.348 311.88,42.613 311.88,41.516 L311.88,39.252 C311.88,38.616 311.797,38.089 311.634,37.685 C311.481,37.307 311.26,37.02 310.959,36.807 C310.644,36.585 310.247,36.429 309.781,36.343 C309.274,36.25 308.679,36.203 308.01,36.203 L292.886,36.203 L292.886,44.433 L308.273,44.433 Z M288.746,57.598 L288.746,32.653 L308.765,32.653 C309.857,32.653 310.856,32.732 311.734,32.89 C312.661,33.056 313.448,33.398 314.076,33.904 C314.708,34.415 315.199,35.146 315.534,36.076 C315.856,36.977 316.02,38.155 316.02,39.58 C316.02,40.899 315.958,42.083 315.837,43.097 C315.706,44.169 315.368,45.082 314.831,45.81 C314.283,46.552 313.462,47.11 312.39,47.467 C311.363,47.809 309.933,47.983 308.142,47.983 L292.886,47.983 L292.886,57.598 L288.746,57.598 Z"
+                    id="Fill-7" fill="#4D4E4C"></path>
+                  <path
+                    d="M42.715,8.383 C39.965,8.383 36.247,10.202 36.247,14.649 L36.247,52.453 L40.74,52.453 L40.74,14.649 C40.74,13.839 41.268,12.877 42.588,12.877 L77.189,12.875 L77.189,18.33 C77.189,18.33 58.559,18.328 52.991,18.328 C47.424,18.328 46.536,21.823 46.536,24.87 L46.536,58.17 L41.18,58.17 L41.18,58.177 L36.247,58.177 L36.247,63 L51.029,63 L51.029,25.341 C51.029,23.976 51.29,22.831 53.181,22.831 L81.682,22.823 L81.682,8.382 L42.715,8.383"
+                    id="Fill-8" fill="#7AB642"></path>
+                  <path
+                    d="M42.731,13.511 C41.978,13.511 41.423,14.091 41.423,14.97 L41.423,52.992 L35.676,52.992 L35.676,17.51 C35.676,13.666 33.531,10.971 29.266,10.971 L4.571,10.971 L4.648,5.243 L39.22,5.243 C40.911,5.243 41.423,6.495 41.423,7.289 L41.423,8.031 C41.423,8.031 42.102,7.904 42.561,7.904 L45.916,7.903 L45.916,7.289 C45.916,4.866 44.739,2.886 42.602,1.716 C41.195,0.945 40.321,0.76 39.589,0.76 L0,0.75 L0.012,15.464 L28.98,15.464 C30.383,15.464 31.183,16.463 31.183,17.669 L31.183,57.606 L45.916,57.606 L45.916,13.511 L42.731,13.511"
+                    id="Fill-9" fill="#B4B5B4"></path>
+                </g>
+              </g>
+            </g>
+          </svg>
+          <span class="contact-link-container">
+            <a class="link" href="http://links.tasktop.com/viz-support">Contact Support</a>
+          </span>
+        </div>
+      </div>
+      <div class="page-body">
+        <h1>404</h1>
+        <h2>Error: The requested URL was not found.</h2>
+      </div>
+      <div class="page-footer">
+        &copy; 2013 - 2022 Tasktop Technologies Incorporated
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
